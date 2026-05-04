@@ -9,5 +9,6 @@
 .displayDigit {
 color:black;
 background-color: white;
-
+flex: 1;
 }
+
