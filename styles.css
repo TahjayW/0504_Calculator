@@ -4,11 +4,50 @@
     gap: 10px;
     padding: 10px;
     border: 1px red;
+    height: 20px;
+    width: 20px;
 }
 
 .displayDigit {
+text-align: right;
 color:black;
 background-color: white;
 flex: 1;
 }
 
+
+.operandContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 10px;
+    border: 1px red;
+}
+
+.operand {
+    color: white;
+    background-color: black;
+    flex: 1
+}
+
+.numberContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    width: 200px;
+    height: 400px;
+}
+
+.numberBtn{
+text-align: right;
+color: white;
+background-color: black;
+flex: 1;
+border-color: black;
+border-width: 5px;
+}
+
+.CalcCase{
+height: 1000px;
+width: 500px;
+}
