@@ -22,20 +22,23 @@ flex: 1;
     gap: 10px;
     padding: 10px;
     border: 1px red;
+    width: 80%;
+    height: 10%;
 }
 
 .operand {
     color: white;
     background-color: black;
-    flex: 1
+    flex: 1 1 20%;
 }
 
 .numberContainer{
     display: flex;
     flex-direction: row;
     gap: 5px;
-    width: 200px;
-    height: 400px;
+    width: 80%;
+    height: 60%;
+    flex-wrap: wrap;
 }
 
 .numberBtn{
@@ -44,7 +47,8 @@ color: white;
 background-color: black;
 flex: 1;
 border-color: black;
-border-width: 5px;
+flex: 1 1 30%;
+
 }
 
 .CalcCase{
