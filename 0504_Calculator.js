@@ -11,19 +11,38 @@
 //3. If the value of the button is a number, display it
 //Just for debug to see if we can get this working. We'll add additional logic from there.
 
+let numberContainer = document.querySelector(".numberContainer");
+let displayDigit = document.querySelector(".displayDigit");
+let operandContainer = document.querySelector(".operandContainer");
+let currentOperand = "";
+var currentValue = 0;
+var previousValue = 0;
+
+
+let calcArray = [0, 0, 0];
 
 //First, select buttons woop woop
 //I want to turn lines  18-23 into a function to be reused.
-const numberContainer = document.querySelector(".numberContainer");
-var displayDigit = document.querySelector(".displayDigit");
-numberContainer.addEventListener("click", (event) => {
-    let target = event.target;
-    displayDigit.textContent = target.textContent;
+function makeEventListener(aParent, aChild) {
+    aParent.addEventListener("click", (event) => {
+        let target = event.target;
+        aChild.textContent = target.textContent;
 
-});
+    });
+}
+
+//[nnn]
+//[ooo]
+//non
+//ono
+//oon
+//noo
+//
 
 
 
+makeEventListener(numberContainer, displayDigit);
+makeEventListener(operandContainer, currentOperand);
 
 //Calculators let you override previous numbers if you hit one number
 //To emulate that we're going to use a "currentValue" variable that will be overridden if the user
@@ -40,14 +59,36 @@ numberContainer.addEventListener("click", (event) => {
 
 //What does this look like? Am I missing something? Probably but we'll come back to it
 
-var currentValue = 0;
-var currentOPerand = "";
+function add(x, y) {
+    return x + y;
+}
 
+function sub(x, y) {
+    return x - y;
+}
 
+function mult(x, y) {
+    return x * y;
+}
 
-var chooseOperand = document.querySelector(".operandContainer");
-chooseOperand.addEventListener("click", (event) => {
-    let target = event.target;
-    currentOperand = target.textContent;
-});
+function div(x, y) {
+    if (y != 0) {
+        return x / y;
+    } else {
+        return "Err";
+    }
+}
 
+function operate(x, y, operand) {
+    switch (operand) {
+        case "+": add(x, y);
+            break;
+        case "-": sub(x, y);
+            break;
+        case "*": mult(x, y);
+            break;
+        case "/": div(x, y);
+            break;
+    }
+
+}
