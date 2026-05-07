@@ -11,35 +11,48 @@
 </head>
 
 <body>
-    <!-- /*Displaying Number in Flex Container*/ -->
+    <div class="case">
+        <div class="upperDisplay"></div>
+        <div class="lowerDisplay">
+            <!--top four button should be operands-->
+            <div class="topRow">
+                <div class="operator" id="plus"></div>
+                <div class="operator" id="minus"></div>
+                <div class="operator" id="multiply"></div>
+                <div class="operator" id="divide"></div>
+            </div>
+            <!--bottomRowLeft contains the numbers, right contains the clear and enter operations-->
+            <!--Bottom two rows are in a flex container, direction row-->
 
-    <div class="CalcCase">
-        <div class="display">
-            <div class="displayDigit" id="text"></div>
-        </div>
-        <div class="buttonContainer">
-            <div class="operandContainer">
-                <div class="operand" id="add">+</div>
-                <div class="operand" id="subtract">-</div>
-                <div class="operand" id="multiply">*</div>
-                <div class="operand" id="divide">/</div>
-                <div class="operand" id="equals"> = </div>
+            <div class="bottomRowBothSides">
+                <div class="bottomRowLeft">
+                    <div class="btnNumber" id="1">1</div>
+                    <div class="btnNumber" id="2">2</div>
+                    <div class="btnNumber" id="3">3</div>
+                    <div class="btnNumber" id="4">4</div>
+                    <div class="btnNumber" id="5">5</div>
+                    <div class="btnNumber" id="6">6</div>
+                    <div class="btnNumber" id="7">7</div>
+                    <div class="btnNumber" id="8">8</div>
+                    <div class="btnNumber" id="9">9</div>
+                    <div class="btnNumber" id="num0">0</div>
+                </div>
+
+                <div class="bottomRowRight">
+                    <div class="equals">=</div>
+                    <div class="clear">CLR</div>
+                </div>
             </div>
 
-            <div class="numberContainer">
-                <div class="numberBtn" id="num1">1</div>
-                <div class="numberBtn" id="num2">2</div>
-                <div class="numberBtn" id="num3">3</div>
-                <div class="numberBtn" id="num4">4</div>
-                <div class="numberBtn" id="num5">5</div>
-                <div class="numberBtn" id="num6">6</div>
-                <div class="numberBtn" id="num7">7</div>
-                <div class="numberBtn" id="num8">8</div>
-                <div class="numberBtn" id="num9">9</div>
-                <div class="numberBtn" id="num0">0</div>
-            </div>
-
         </div>
+
+
+
+
+
+
+
+
 
     </div>
 </body>
