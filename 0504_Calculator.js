@@ -59,27 +59,27 @@ function buttonLogic(pressedButton) {
 
         //an operator was pressed
         case "operator":
-            //No numbers stored? 
-            switch (calculatorMemory.length) {
+            
+            switch (calculatorMemory.length) { //Check for stored numbers
 
 
                 case 0: //Our array is empty! No numbers stored.
                     //If there is a number in the display, store it.
                     if (!isDisplayEmpty) {
-                        calculatorMemory[0] = displayBox.textContent; //stored value
+                       storeThis(displayBox.textContent, 0); //stored value
                         displayBox.textContent = "";
                     } else if (isDisplayEmpty) {//User inputted NOTHING
-                        calculatorMemory[0] = 0;
+                        storeThis(displayBox.textContent, 0);
                     }
                     //then store the operator
                     updateOperator(pressedButton);
                     break;
                 case 1: //Our array has a value! 1 number is stored.
                     if (!isDisplayEmpty) {
-                        calculatorMemory[1] = displayBox.textContent; //stored value CAN I turn this into a function?
-                        
+                        storeThis(displayBox.textContent, 1); //stored value CAN I turn this into a function?
+
                     } else if (isDisplayEmpty) {
-                        calculatorMemory[1] = 0; //user inputted NOTHING
+                        storeThis(0,1);//user inputted NOTHING
                     }
                     updateOperator(pressedButton);
                     break;
@@ -102,6 +102,10 @@ function buttonLogic(pressedButton) {
     }
 
 
+}
+
+function storeThis(aNumber, arraySpace){
+    calculatorMemory[arraySpace] = aNumber;
 }
 
 function updateOperator(operator) {
