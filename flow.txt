@@ -1,0 +1,39 @@
+Flow
+
+
+#Start
+#I should start with the first digit being 0 in the display
+#This start case should be a state, this state should be a variable and a value
+#To display that, we use a say function and call the value of our start object
+
+
+#Next, we create a button listener that determines the type of button pressed
+#If the user pressed ANYTHING, start is immediately FALSE
+
+#Options are 4
+#Number, operator, clear or equals
+
+#Easiest to start with is clear, which sets us back to start value
+
+
+#Starting with the number, if start state is true
+#We should have no values
+#We should remove the 0 and overwrite it with whatever was pressed
+#We should exit start state
+#We dont need to calculate anything during number being pressed rn
+
+#Operator
+
+#Now the user wants to do an operation
+
+
+#Are we at the start?
+#Assign first value as 0
+#Store operator as what was pressed
+#Push the stored value to the calc memory
+#Is there already a value stored?
+#If no>>
+#Take the display value and store it
+#store the operator too
+#If yes
+#Preform an operation on the stored value and current display value

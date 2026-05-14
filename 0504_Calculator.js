@@ -1,175 +1,147 @@
 //Tahjay Watson
 //0504_Calculator JavaScript file
 
-const displayBox = document.querySelector(".upperDisplay")
 
 
-//UpdateVar
-//Create the functions that update one of your number variables when the calculator’s digit buttons are clicked. 
-// Your calculator’s display should also update to reflect the value of that number variable.
-//>Start Value
-//Number Pressed
-//Previous num is added as the last digit 
+//Global variables
+let arrayMemory = [];
+let anOperator = { operatorChosen: false, name: "default" };
+let numOne = 0;
+let numTwo = 0;
+let result = 0;
 
-let storedValue = 0;
-let storeOperator = "default";
-let calculatorMemory = [];
-
+//Select box
+const displayBox = document.querySelector(".upperDisplay");
 const calcButtons = document.querySelector(".case");
 
+
+//detect input
 calcButtons.addEventListener("click", (event) => {
     let target = event.target;
     buttonLogic(target);
 });
 
 
-//We should check whether a stored operator and number exist before accepting/displaying any inputs of the user
-function operatorExists(operator) {
-    if (operator == "default") {
-        return false;
-    } else {
-        return true;
-    }
-}
 
-//This runs any time the user presses a button, meaning we have to check states within it
+//determine action
 function buttonLogic(pressedButton) {
-    //Determine what was pressed before checking state
-    switch (determineWhatWasPressed(pressedButton)) {
-
-        //A number was pressed
+    switch (pressedButton.className) {
         case "btnNumber":
-            if (operatorExists(storeOperator) && calculatorMemory.length != 0) {
-                //There is an operator and number stored   
-            }
-            if (!operatorExists(storeOperator) && calculatorMemory.length != 0) {
-                //There is no operator, but a number is stored    
+            //Determine which number is being assigned a value
+            if (!anOperator.operatorChosen && arrayMemory.length == 0) {
 
+                print.sayAnd(pressedButton);
+                assign.setFirstVal();
+                alert(numOne);  
             }
-            if (!operatorExists(storeOperator) && calculatorMemory.length == 0) {
-                //There is no operator or number stored
-                //Increment display based on value entered
-                //This should probably be a function
-                updateDisplay(pressedButton);
-                //store the value
-
+            else {
+                print.sayAnd(pressedButton);
+                assign.secondVal;
 
             }
             break;
-
-        //an operator was pressed
         case "operator":
-            
-            switch (calculatorMemory.length) { //Check for stored numbers
+            if (!anOperator.operatorChosen) {
+                anOperator.name = pressedButton.id;
+                anOperator.operatorChosen = true;
+                assign.setFirstVal;
+                arrayMemory.push(numOne);
+                alert(arrayMemory[0]);
 
-
-                case 0: //Our array is empty! No numbers stored.
-                    //If there is a number in the display, store it.
-                    if (!isDisplayEmpty) {
-                       storeThis(displayBox.textContent, 0); //stored value
-                        displayBox.textContent = "";
-                    } else if (isDisplayEmpty) {//User inputted NOTHING
-                        storeThis(displayBox.textContent, 0);
-                    }
-                    //then store the operator
-                    updateOperator(pressedButton);
-                    break;
-                case 1: //Our array has a value! 1 number is stored.
-                    if (!isDisplayEmpty) {
-                        storeThis(displayBox.textContent, 1); //stored value CAN I turn this into a function?
-
-                    } else if (isDisplayEmpty) {
-                        storeThis(0,1);//user inputted NOTHING
-                    }
-                    updateOperator(pressedButton);
-                    break;
-                case 2: //Our array has TWO values! lets OPERATE!
-                    operate(calculatorMemory[0], calculatorMemory[1], storedOperator);
-                    break;
+            } else {
+                if (eval.isValid) { //Can we eval?
+                    result = eval.preformOperation(anOperator);
+                    print.sayClear(result);
+                    anOperator.name = pressedButton.id;
+                    assign.setFirstVal;
+                }
 
             }
-
-        //equals was pressed
+            break;
         case "equals":
-            //so this would just call operate outright, but do nothing if there aren't two numbers/
-            if (calculatorMemory)
-                break;
-
-        //clear was pressed
+            if (arrayMemory.length == 1 && anOperator.operatorChosen) {
+                assign.secondVal;
+                result = eval.preformOperation(anOperator);
+                print.sayClear(result);
+                assign.setFirstVal;
+                arrayMemory.length = 1;
+            }
         case "clear":
-            clear();
+            setStartState;
             break;
-    }
 
 
-}
-
-function storeThis(aNumber, arraySpace){
-    calculatorMemory[arraySpace] = aNumber;
-}
-
-function updateOperator(operator) {
-    storedOperator = operator.id;
-}
-
-function updateDisplay(aValue) {
-    displayBox.textContent += aValue.textContent;
-}
-
-function isDisplayEmpty() {
-    if (displayBox.textContent = "") {
-        return true;
-    } else {
-        return false;
     }
 }
 
-function determineWhatWasPressed(someButton) {
-    let typeOfButtonPressed = someButton.className;
-    return typeOfButtonPressed;
+
+
+//set start state
+
+
+
+//General Use functions
+
+
+const assign = {
+    setFirstVal : function(){
+        numOne = displayBox.textContent;
+    },
+    setSecondVal : function(){
+        numTwo = displayBox.textContent;
+    }
+    
 }
 
 
-function clear() {
-    calculatorMemory.length = 0;
-    displayBox.textContent = "";
-    storedOperator = "default";
-}
+let print = {
+    sayAnd(pressedButton) {
+        displayBox.textContent += pressedButton.textContent;
+    },
 
-function equals() {
-    //call chooseOperator and Operate 
-}
-
-function add(x, y) {
-    return x + y;
-}
-
-function sub(x, y) {
-    return x - y;
-}
-
-function mult(x, y) {
-    return x * y;
-}
-
-function div(x, y) {
-    if (y != 0) {
-        return x / y;
-    } else {
-        return "Err";
+    sayClear(pressedButton) {
+        displayBox.textContent = pressedButton.textContent;
     }
 }
 
-function operate(x, y, operand) {
-    switch (operand.id) {
-        case "plus": add(x, y);
-            break;
-        case "minus": sub(x, y);
-            break;
-        case "multiply": mult(x, y);
-            break;
-        case "divide": div(x, y);
-            break;
+function setStartState() {
+    arrayMemory.length = 0;
+    anOperator.name = "default".operatorChosen = true;
+}
+
+let eval = {
+    isValid() {
+        if (arrayMemory.length = 2) {
+            return true;
+
+        } else {
+            return false
+        }
+    },
+    preformOperation(anOperator) {
+        switch (anOperator.name) {
+            case "plus":
+                result = numOne + numTwo;
+                return result;
+            case "minus":
+                result = numOne - numTwo;
+                return result;
+
+            case "multiply":
+                result = numOne * numTwo;
+                return result;
+
+            case "divide":
+                if (numTwo != 0) {
+                    result = numOne / numTwo;
+                    return result;
+
+                } else {
+                    result = "error"
+                    return result;
+
+                }
+        }
     }
 
 }
