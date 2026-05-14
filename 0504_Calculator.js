@@ -14,7 +14,7 @@ let result = 0;
 const displayBox = document.querySelector(".upperDisplay");
 const calcButtons = document.querySelector(".case");
 
-
+setStartState();
 //detect input
 calcButtons.addEventListener("click", (event) => {
     let target = event.target;
@@ -32,11 +32,11 @@ function buttonLogic(pressedButton) {
 
                 print.sayAnd(pressedButton);
                 assign.setFirstVal();
-                alert(numOne);  
+                alert(numOne);      
             }
             else {
                 print.sayAnd(pressedButton);
-                assign.secondVal;
+                assign.setSecondVal();
 
             }
             break;
@@ -44,7 +44,7 @@ function buttonLogic(pressedButton) {
             if (!anOperator.operatorChosen) {
                 anOperator.name = pressedButton.id;
                 anOperator.operatorChosen = true;
-                assign.setFirstVal;
+                assign.setFirstVal();
                 arrayMemory.push(numOne);
                 alert(arrayMemory[0]);
 
@@ -60,7 +60,7 @@ function buttonLogic(pressedButton) {
             break;
         case "equals":
             if (arrayMemory.length == 1 && anOperator.operatorChosen) {
-                assign.secondVal;
+                assign.setSecondVal();
                 result = eval.preformOperation(anOperator);
                 print.sayClear(result);
                 assign.setFirstVal;
@@ -84,10 +84,10 @@ function buttonLogic(pressedButton) {
 
 
 const assign = {
-    setFirstVal : function(){
+    setFirstVal(){
         numOne = displayBox.textContent;
     },
-    setSecondVal : function(){
+    setSecondVal(){
         numTwo = displayBox.textContent;
     }
     
@@ -106,7 +106,7 @@ let print = {
 
 function setStartState() {
     arrayMemory.length = 0;
-    anOperator.name = "default".operatorChosen = true;
+    anOperator.name = "default".operatorChosen = false;
 }
 
 let eval = {
