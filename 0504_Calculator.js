@@ -3,18 +3,19 @@
 
 
 
+
 //Global variables
 let arrayMemory = [];
 let anOperator = { operatorChosen: false, name: "default" };
 let numOne = 0;
-let numTwo = 0;
+let numTwo = null;
 let result = 0;
 
 //Select box
 const displayBox = document.querySelector(".upperDisplay");
 const calcButtons = document.querySelector(".case");
 
-setStartState();
+setStartState(0);
 //detect input
 calcButtons.addEventListener("click", (event) => {
     let target = event.target;
@@ -28,32 +29,64 @@ function buttonLogic(pressedButton) {
     switch (pressedButton.className) {
         case "btnNumber":
             //Determine which number is being assigned a value
-            if (!anOperator.operatorChosen && arrayMemory.length == 0) {
 
-                print.sayAnd(pressedButton);
-                assign.setFirstVal();
-                alert(numOne);      
-            }
-            else {
-                print.sayAnd(pressedButton);
-                assign.setSecondVal();
+            switch (anOperator.operatorChosen) {
+                case true:
+                    if (arrayMemory.length == 2) {
+                        print.sayAnd(pressedButton);
+                        assign.setSecondVal();
+                        break;
+
+                    } else if (numTwo == null) {
+                        print.sayClear(pressedButton);
+                        assign.setSecondVal();
+                        break;
+
+                    } else {
+                        print.sayAnd(pressedButton);
+                        assign.setSecondVal();
+                        break;
+
+                    }
+
+                case false:
+                    if (arrayMemory.length == 1) {
+                        print.sayClear(pressedButton);
+                        assign.setFirstVal();
+                        break;
+
+                    } else {
+                        print.sayAnd(pressedButton);
+                        assign.setFirstVal();
+                        break;
+
+
+                    }
 
             }
+
+
+
             break;
         case "operator":
             if (!anOperator.operatorChosen) {
                 anOperator.name = pressedButton.id;
                 anOperator.operatorChosen = true;
                 assign.setFirstVal();
-                arrayMemory.push(numOne);
+                if(arrayMemory.length ==0){
+                    arrayMemory.push(numOne);
+                }else{
+                    arrayMemory[0]=numOne;
+                }
+                
                 alert(arrayMemory[0]);
 
             } else {
-                if (eval.isValid) { //Can we eval?
+                if (eval.isValid()) { //Can we eval?
                     result = eval.preformOperation(anOperator);
                     print.sayClear(result);
                     anOperator.name = pressedButton.id;
-                    assign.setFirstVal;
+                    assign.setFirstVal();
                 }
 
             }
@@ -62,12 +95,14 @@ function buttonLogic(pressedButton) {
             if (arrayMemory.length == 1 && anOperator.operatorChosen) {
                 assign.setSecondVal();
                 result = eval.preformOperation(anOperator);
-                print.sayClear(result);
-                assign.setFirstVal;
-                arrayMemory.length = 1;
+                print.sayResult();
+                assign.setFirstVal();
+                setStartState(1);
             }
+            break;
         case "clear":
-            setStartState;
+
+            setStartState(0);
             break;
 
 
@@ -84,13 +119,18 @@ function buttonLogic(pressedButton) {
 
 
 const assign = {
-    setFirstVal(){
+    setFirstVal() {
         numOne = displayBox.textContent;
     },
-    setSecondVal(){
+    setSecondVal() {
+
         numTwo = displayBox.textContent;
+
+        if (arrayMemory.length == 2) {
+            arrayMemory[1] = numTwo;
+        }
     }
-    
+
 }
 
 
@@ -101,13 +141,22 @@ let print = {
 
     sayClear(pressedButton) {
         displayBox.textContent = pressedButton.textContent;
+    },
+
+    sayResult(){
+        displayBox.textContent = result;
     }
 }
 
-function setStartState() {
-    arrayMemory.length = 0;
-    anOperator.name = "default".operatorChosen = false;
+function setStartState(arrayLength) {
+    arrayMemory.length = arrayLength; //set to 0 at start
+    anOperator.name = "default";
+    anOperator.operatorChosen = false;
+    numTwo = null;
+    displayBox.textContent= "";
 }
+
+
 
 let eval = {
     isValid() {
