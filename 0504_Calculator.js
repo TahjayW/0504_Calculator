@@ -1,8 +1,10 @@
 //Tahjay Watson
 //0504_Calculator JavaScript file
 
-
-
+//TODO
+//Need to alter the say functions to still output things when a button that is not a number is pressed
+//Merge assign.setFirstVal.setSecondVal() with arraypush
+//use ifs to check whether to push or update values
 
 //Global variables
 let arrayMemory = [];
@@ -37,19 +39,16 @@ function buttonLogic(pressedButton) {
                         assign.setSecondVal();
                         arrayMemory[1] = numTwo;
                         break;
-
                     } else if (numTwo == null) {
                         print.sayClear(pressedButton);
                         assign.setSecondVal();
                         arrayMemory.push(numTwo);
                         break;
-
                     } else {
                         print.sayAnd(pressedButton);
-                        assign.setSecondVal();
-                        arrayMemory.push(numTwo);
+                        assign.setSecondVal(); // merge this with
+                        arrayMemory.push(numTwo);//this
                         break;
-
                     }
 
                 case false:
@@ -58,13 +57,10 @@ function buttonLogic(pressedButton) {
                         print.sayClear(pressedButton);
                         assign.setFirstVal();
                         break;
-
                     } else {
                         print.sayAnd(pressedButton);
                         assign.setFirstVal();
                         break;
-
-
                     }
 
             }
@@ -77,12 +73,12 @@ function buttonLogic(pressedButton) {
                 anOperator.name = pressedButton.id;
                 anOperator.operatorChosen = true;
                 assign.setFirstVal();
-                if(arrayMemory.length ==0){
+                if (arrayMemory.length == 0) {
                     arrayMemory.push(numOne);
-                }else{
-                    arrayMemory[0]=numOne;
+                } else {
+                    arrayMemory[0] = numOne;
                 }
-                
+
                 alert(arrayMemory[0]);
 
             } else {
@@ -91,28 +87,42 @@ function buttonLogic(pressedButton) {
                     print.sayClear(result);
                     anOperator.name = pressedButton.id;
                     assign.setFirstVal();
+                }else {
+
+                    if(arrayMemory[0]==null){
+                        assign.setFirstVal();
+                    }else{
+                        anOperator.name = pressedButton.id;
+
+                    }
+
+
+
                 }
+                //Why cant we eval? Is there a number stored?
+
 
             }
             break;
         case "equals":
 
 
-        ///Can merge lines 104-107 & 109-112
+            ///Can merge lines 104-107 & 109-112
             if (arrayMemory.length == 1 && anOperator.operatorChosen) {
                 assign.setSecondVal();
                 result = eval.preformOperation(anOperator);
                 print.sayResult();
                 assign.setFirstVal();
                 setStartState(1);
-            }else if(eval.isValid() && anOperator.operatorChosen){
+            } else if (eval.isValid() && anOperator.operatorChosen) {
                 result = eval.preformOperation(anOperator);
                 print.sayResult();
                 assign.setFirstVal();
                 setStartState(1);
-            }else if(displayBox.textContent.length==0){
+            } else if (displayBox.textContent.length == 0 && arrayMemory.length == 0) {
                 assign.setFirstVal();
-                
+                sayClear()
+
             }
             break;
         case "clear":
@@ -135,9 +145,9 @@ function buttonLogic(pressedButton) {
 
 const assign = {
     setFirstVal() {
-        if(displayBox.textContent!=""){
+        if (displayBox.textContent != "") {
             numOne = displayBox.textContent;
-        }else{
+        } else {
             displayBox.textContent = 0;
         }
         
@@ -165,7 +175,7 @@ let print = {
         displayBox.textContent = pressedButton.textContent;
     },
 
-    sayResult(){
+    sayResult() {
         displayBox.textContent = result;
     }
 }
@@ -177,12 +187,12 @@ function setStartState(arrayLength) {
     anOperator.name = "default";
     anOperator.operatorChosen = false;
     numTwo = null;
-    if(arrayLength==0){
-        displayBox.textContent= "";
+    if (arrayLength == 0) {
+        displayBox.textContent = "";
 
     }
 
-    
+
 }
 
 
@@ -191,7 +201,7 @@ function setStartState(arrayLength) {
 //Object that contains formulas and checks if array can preform an operation
 let eval = {
     isValid() {
-        if (arrayMemory.length = 2) {
+        if (arrayMemory.length == 2) {
             return true;
 
         } else {
@@ -220,7 +230,7 @@ let eval = {
                     result = "error"
                     return result;
 
-                    
+
 
                 }
         }
