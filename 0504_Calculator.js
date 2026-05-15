@@ -35,22 +35,26 @@ function buttonLogic(pressedButton) {
                     if (arrayMemory.length == 2) {
                         print.sayAnd(pressedButton);
                         assign.setSecondVal();
+                        arrayMemory[1] = numTwo;
                         break;
 
                     } else if (numTwo == null) {
                         print.sayClear(pressedButton);
                         assign.setSecondVal();
+                        arrayMemory.push(numTwo);
                         break;
 
                     } else {
                         print.sayAnd(pressedButton);
                         assign.setSecondVal();
+                        arrayMemory.push(numTwo);
                         break;
 
                     }
 
                 case false:
                     if (arrayMemory.length == 1) {
+                        setStartState(0);
                         print.sayClear(pressedButton);
                         assign.setFirstVal();
                         break;
@@ -92,12 +96,23 @@ function buttonLogic(pressedButton) {
             }
             break;
         case "equals":
+
+
+        ///Can merge lines 104-107 & 109-112
             if (arrayMemory.length == 1 && anOperator.operatorChosen) {
                 assign.setSecondVal();
                 result = eval.preformOperation(anOperator);
                 print.sayResult();
                 assign.setFirstVal();
                 setStartState(1);
+            }else if(eval.isValid() && anOperator.operatorChosen){
+                result = eval.preformOperation(anOperator);
+                print.sayResult();
+                assign.setFirstVal();
+                setStartState(1);
+            }else if(displayBox.textContent.length==0){
+                assign.setFirstVal();
+                
             }
             break;
         case "clear":
@@ -111,7 +126,7 @@ function buttonLogic(pressedButton) {
 
 
 
-//set start state
+
 
 
 
@@ -120,7 +135,12 @@ function buttonLogic(pressedButton) {
 
 const assign = {
     setFirstVal() {
-        numOne = displayBox.textContent;
+        if(displayBox.textContent!=""){
+            numOne = displayBox.textContent;
+        }else{
+            displayBox.textContent = 0;
+        }
+        
     },
     setSecondVal() {
 
@@ -134,6 +154,8 @@ const assign = {
 }
 
 
+
+//Object that controls displayBOx
 let print = {
     sayAnd(pressedButton) {
         displayBox.textContent += pressedButton.textContent;
@@ -148,16 +170,25 @@ let print = {
     }
 }
 
+
+//Reset function to set states back at 0
 function setStartState(arrayLength) {
     arrayMemory.length = arrayLength; //set to 0 at start
     anOperator.name = "default";
     anOperator.operatorChosen = false;
     numTwo = null;
-    displayBox.textContent= "";
+    if(arrayLength==0){
+        displayBox.textContent= "";
+
+    }
+
+    
 }
 
 
 
+
+//Object that contains formulas and checks if array can preform an operation
 let eval = {
     isValid() {
         if (arrayMemory.length = 2) {
@@ -188,6 +219,8 @@ let eval = {
                 } else {
                     result = "error"
                     return result;
+
+                    
 
                 }
         }
