@@ -79,19 +79,21 @@ function buttonLogic(pressedButton) {
                     arrayMemory[0] = numOne;
                 }
 
-                alert(arrayMemory[0]);
-
             } else {
                 if (eval.isValid()) { //Can we eval?
                     result = eval.preformOperation(anOperator);
-                    print.sayClear(result);
+                    print.sayClear(pressedButton);
                     anOperator.name = pressedButton.id;
                     assign.setFirstVal();
-                }else {
+                    //Remove second space from operator
+                    arrayMemory.length=1;
+                    numTwo= null;
 
-                    if(arrayMemory[0]==null){
+                } else {
+
+                    if (arrayMemory[0] == null) {
                         assign.setFirstVal();
-                    }else{
+                    } else {
                         anOperator.name = pressedButton.id;
 
                     }
@@ -147,10 +149,11 @@ const assign = {
     setFirstVal() {
         if (displayBox.textContent != "") {
             numOne = displayBox.textContent;
-        } else {
-            displayBox.textContent = 0;
+            if (arrayMemory.length == 1) {
+                arrayMemory[0] == numOne;
+            }
         }
-        
+
     },
     setSecondVal() {
 
@@ -168,11 +171,21 @@ const assign = {
 //Object that controls displayBOx
 let print = {
     sayAnd(pressedButton) {
-        displayBox.textContent += pressedButton.textContent;
+        if(displayBox.textContent!="0"){
+            displayBox.textContent += pressedButton.textContent;
+        }else{
+            displayBox.textContent = pressedButton.textContent;
+        }
+        
     },
 
     sayClear(pressedButton) {
-        displayBox.textContent = pressedButton.textContent;
+        if (pressedButton.className != "operator") {
+            displayBox.textContent = pressedButton.textContent;
+        } else if (pressedButton.className == "operator") {
+            displayBox.textContent = result;//This only fires if eval.isVald() does, which should result in the correct value being displayed
+
+        }
     },
 
     sayResult() {
@@ -188,7 +201,7 @@ function setStartState(arrayLength) {
     anOperator.operatorChosen = false;
     numTwo = null;
     if (arrayLength == 0) {
-        displayBox.textContent = "";
+        displayBox.textContent = "0";
 
     }
 
@@ -211,7 +224,7 @@ let eval = {
     preformOperation(anOperator) {
         switch (anOperator.name) {
             case "plus":
-                result = numOne + numTwo;
+                result = Number(numOne) + Number(numTwo);
                 return result;
             case "minus":
                 result = numOne - numTwo;

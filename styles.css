@@ -25,9 +25,15 @@
 }
 
 .operator {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex: 1 1 0%;
     border-style: solid;
-    border-color: aqua;
+    border-color: white;
+    background-color: black;
+    color:white;
 
 }
 
@@ -45,7 +51,10 @@ height: 75%;
     width: 75%;
     height: 100%;
     border-style: solid;
-    border-color: red;
+    border-color:white;
+    color:white;
+    background-color: black;
+    
     
 }
 .btnNumber{
